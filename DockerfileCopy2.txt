@@ -1,0 +1,23 @@
+FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
+WORKDIR /appmcr.microsoft.com/dotnet/aspnet:7.0
+EXPOSE 5198
+
+ENV ASPNETCORE_URLS=http://+:5198
+
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+ARG configuration=Release
+WORKDIR /src
+COPY ["WeatherApp.csproj", "./"]
+RUN dotnet restore "WeatherApp.csproj"
+COPY . .
+WORKDIR "/src/."
+RUN dotnet build "WeatherApp.csproj" -c $configuration -o /app/build
+
+FROM build AS publish
+ARG configuration=Release
+RUN dotnet publish "WeatherApp.csproj" -c $configuration -o /app/publish /p:UseAppHost=false
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "WeatherApp.dll"]
