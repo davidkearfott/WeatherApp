@@ -1,3 +1,8 @@
+<!-- 
+Markdown Cheat Sheet 
+
+https://code.visualstudio.com/docs/languages/markdown#:~:text=Markdown%20preview,-VS%20Code%20supports&text=To%20switch%20between%20views%2C%20press,real%2Dtime%20as%20you%20edit. -->
+
 ## Run Rancher Desktop
 
 ## Build
